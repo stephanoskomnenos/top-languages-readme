@@ -187,7 +187,7 @@ if __name__ == "__main__":
     )
     if new_readme != old_readme:
         repo.update_file(
-            branch="master",
+            branch="main",
             path=content.path,
             sha=content.sha,
             message=commit_message,
