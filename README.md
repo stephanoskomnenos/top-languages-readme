@@ -38,6 +38,7 @@ Did not need to fork this repository.
             runs-on: ubuntu-latest
             steps:
             - name: Extract branch name
+              id: extract_branch
               if: github.event_name != 'pull_request'
               shell: bash
               run: |
@@ -47,7 +48,7 @@ Did not need to fork this repository.
               uses: stephanoskomnenos/top-languages-readme@master
               with:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
-                BRANCH_NAME: ${{ env.BRANCH_NAME }}
+                BRANCH_NAME: ${{ steps.extract_branch.outputs.BRANCH_NAME }}
     ```
 
 1. Add a comment to your README.md like this:
@@ -107,6 +108,7 @@ Did not need to fork this repository.
             runs-on: ubuntu-latest
             steps:
             - name: Extract branch name
+              id: extract_branch
               if: github.event_name != 'pull_request'
               shell: bash
               run: |
@@ -116,7 +118,7 @@ Did not need to fork this repository.
               uses: stephanoskomnenos/top-languages-readme@master
               with:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
-                BRANCH_NAME: ${{ env.BRANCH_NAME }}
+                BRANCH_NAME: ${{ steps.extract_branch.outputs.BRANCH_NAME }}
     ```
 
 ## With option (Optional)
@@ -139,6 +141,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: Extract branch name
+          id: extract_branch
           if: github.event_name != 'pull_request'
           shell: bash
           run: |
@@ -147,7 +150,7 @@ jobs:
         - name: Generate and update README
           uses: stephanoskomnenos/top-languages-readme@master
           with:
-            BRANCH_NAME: ${{ env.BRANCH_NAME }}
+            BRANCH_NAME: ${{ steps.extract_branch.outputs.BRANCH_NAME }}
             COMMIT_MESSAGE: "Updated the Graph with new Metrics" # Optional
             USERNAME: <username> # Optional
             LINE_FORMAT: "$NAME   $SIZE $BAR  $PERCENT" # Optional
