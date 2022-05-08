@@ -26,15 +26,28 @@ Did not need to fork this repository.
     on:
         workflow_dispatch:
         schedule:
-            # Runs at 12am UTC
-            - cron: '0 0 * * *'
+            # Runs at 15:20 UTC
+            - cron: '20 15 * * *'
+
+    permissions:
+        contents: write
 
     jobs:
         update-readme:
             name: Update this repo's README
             runs-on: ubuntu-latest
             steps:
-            - uses: ryuanerin/top-languages-readme@master
+            - name: Extract branch name
+              if: github.event_name != 'pull_request'
+              shell: bash
+              run: |
+                echo "##[set-output name=BRANCH_NAME;]$(echo ${GITHUB_REF#refs/heads/})"
+
+            - name: Generate and update README
+              uses: stephanoskomnenos/top-languages-readme@master
+              with:
+                GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                BRANCH_NAME: ${{ env.BRANCH_NAME }}
     ```
 
 1. Add a comment to your README.md like this:
@@ -82,17 +95,28 @@ Did not need to fork this repository.
     on:
         workflow_dispatch:
         schedule:
-            # Runs at 12am UTC
-            - cron: '0 0 * * *'
+            # Runs at 15:20 UTC
+            - cron: '20 15 * * *'
+
+    permissions:
+        contents: write
 
     jobs:
         update-readme:
             name: Update this repo's README
             runs-on: ubuntu-latest
             steps:
-            - uses: ryuanerin/top-languages-readme@master
+            - name: Extract branch name
+              if: github.event_name != 'pull_request'
+              shell: bash
+              run: |
+                echo "##[set-output name=BRANCH_NAME;]$(echo ${GITHUB_REF#refs/heads/})"
+
+            - name: Generate and update README
+              uses: stephanoskomnenos/top-languages-readme@master
               with:
                 GH_TOKEN: ${{ secrets.GH_TOKEN }}
+                BRANCH_NAME: ${{ env.BRANCH_NAME }}
     ```
 
 ## With option (Optional)
@@ -103,16 +127,27 @@ name: Top-Languages Readme
 on:
     workflow_dispatch:
     schedule:
-        # Runs at 12am UTC
-        - cron: '0 0 * * *'
+        # Runs at 15:20 UTC
+        - cron: '20 15 * * *'
+
+permissions:
+    contents: write
 
 jobs:
     update-readme:
         name: Update this repo's README
         runs-on: ubuntu-latest
         steps:
-        - uses: ryuanerin/top-languages-readme@master
+        - name: Extract branch name
+          if: github.event_name != 'pull_request'
+          shell: bash
+          run: |
+            echo "##[set-output name=BRANCH_NAME;]$(echo ${GITHUB_REF#refs/heads/})"
+
+        - name: Generate and update README
+          uses: stephanoskomnenos/top-languages-readme@master
           with:
+            BRANCH_NAME: ${{ env.BRANCH_NAME }}
             COMMIT_MESSAGE: "Updated the Graph with new Metrics" # Optional
             USERNAME: <username> # Optional
             LINE_FORMAT: "$NAME   $SIZE $BAR  $PERCENT" # Optional
