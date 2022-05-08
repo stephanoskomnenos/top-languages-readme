@@ -20,8 +20,8 @@ inputs:
   
   BRANCH_NAME:
     description: 'Current branch name of your README repo'
-    default: ${{ env.BRANCH_NAME }}
-    required: true
+    default: "main"
+    required: false
 
   COMMIT_MESSAGE:
     description: "Add a commit message of your choice"
