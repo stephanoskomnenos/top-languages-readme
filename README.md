@@ -47,7 +47,6 @@ Did not need to fork this repository.
             - name: Generate and update README
               uses: stephanoskomnenos/top-languages-readme@master
               with:
-                GH_TOKEN: ${{ secrets.GH_TOKEN }}
                 BRANCH_NAME: ${{ steps.extract_branch.outputs.BRANCH_NAME }}
     ```
 
