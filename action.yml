@@ -17,6 +17,11 @@ inputs:
     description: 'Your GitHub username'
     default: ${{ github.repository_owner }}
     required: false
+  
+  BRANCH_NAME:
+    description: 'Current branch name of your README repo'
+    default: ${{ env.BRANCH_NAME }}
+    required: true
 
   COMMIT_MESSAGE:
     description: "Add a commit message of your choice"
