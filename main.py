@@ -16,6 +16,7 @@ listReg = f"{START_COMMENT}[\\s\\S]+{END_COMMENT}"
 owner = os.getenv("INPUT_USERNAME")
 ghtoken_default = os.getenv("INPUT_GH_TOKEN_DEFAULT")
 ghtoken = os.getenv("INPUT_GH_TOKEN")
+branch_name = os.getenv("INPUT_BRANCH_NAME")
 
 commit_message = os.getenv("INPUT_COMMIT_MESSAGE")
 
@@ -187,7 +188,7 @@ if __name__ == "__main__":
     )
     if new_readme != old_readme:
         repo.update_file(
-            branch="main",
+            branch=branch_name,
             path=content.path,
             sha=content.sha,
             message=commit_message,
